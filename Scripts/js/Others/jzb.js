@@ -5,53 +5,53 @@ function main(item) {
     
     // 频道映射表 - 与原PHP脚本保持一致
     var n = {
-        "cctv1": 578,
-        "cctv2": 579,
-        "cctv3": 580,
-        "cctv4": 581,
-        "cctv4a": 595,
-        "cctv4o": 596,
-        "cctv5": 582,
-        "cctv5p": 583,
-        "cctv6": 584,
-        "cctv7": 585,
-        "cctv8": 586,
-        "cctv9": 587,
-        "cctv10": 588,
-        "cctv11": 589,
-        "cctv12": 590,
-        "cctv13": 591,
-        "cctv14": 592,
-        "cctv15": 593,
-        "cctv17": 594,
-        "bjws": 608,
-        "dfws": 597,
-        "tjws": 611,
-        "cqws": 607,
-        "hljws": 621,
-        "jlws": 601,
-        "lnws": 620,
-        "gsws": 622,
-        "qhws": 605,
-        "sxws": 603,
-        "hbws": 615,
-        "sxiws": 624,
-        "sdws": 613,
-        "ahws": 612,
-        "hnws": 616,
-        "hubws": 604,
-        "hunws": 609,
-        "jxws": 602,
-        "jsws": 599,
-        "zjws": 617,
-        "dnws": 618,
-        "gdws": 598,
-        "szws": 606,
-        "gxws": 614,
-        "gzws": 619,
-        "scws": 610,
-        "xjws": 623,
-        "hinws": 600
+        "cctv1": 578, //CCTV-1
+        "cctv2": 579, //CCTV-2
+        "cctv3": 580, //CCTV-3
+        "cctv4": 581, //CCTV-4
+        "cctv4a": 595, //CCTV-4美洲
+        "cctv4o": 596, //CCTV-4欧洲
+        "cctv5": 582, //CCTV-5
+        "cctv5p": 583, //CCTV-5+
+        "cctv6": 584, //CCTV-6
+        "cctv7": 585, //CCTV-7
+        "cctv8": 586, //CCTV-8
+        "cctv9": 587, //CCTV-9
+        "cctv10": 588, //CCTV-10
+        "cctv11": 589, //CCTV-11
+        "cctv12": 590, //CCTV-12
+        "cctv13": 591, //CCTV-13
+        "cctv14": 592, //CCTV-14
+        "cctv15": 593, //CCTV-15
+        "cctv17": 594, //CCTV-17
+        "bjws": 608, //北京卫视
+        "dfws": 597, //东方卫视
+        "tjws": 611, //天津卫视
+        "cqws": 607, //重庆卫视
+        "hljws": 621, //黑龙江卫视,暂时无法播放
+        "jlws": 601, //吉林卫视
+        "lnws": 620, //辽宁卫视
+        "gsws": 622, //甘肃卫视
+        "qhws": 605, //青海卫视
+        "sxws": 603, //陕西卫视
+        "hbws": 615, //河北卫视
+        "sxiws": 624, //山西卫视
+        "sdws": 613, //山东卫视,暂时无法播放
+        "ahws": 612, //安徽卫视
+        "hnws": 616, //河南卫视
+        "hubws": 604, //湖北卫视
+        "hunws": 609, //湖南卫视
+        "jxws": 602, //江西卫视
+        "jsws": 599, //江苏卫视
+        "zjws": 617, //浙江卫视
+        "dnws": 618, //东南卫视,暂时无法播放
+        "gdws": 598, //广东卫视
+        "szws": 606, //深圳卫视
+        "gxws": 614, //广西卫视
+        "gzws": 619, //贵州卫视
+        "scws": 610, //四川卫视
+        "xjws": 623, //新疆卫视,频道内容与实际不符
+        "hinws": 600 //海南卫视
     };
     
     // 获取对应的频道ID
