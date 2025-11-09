@@ -14,9 +14,9 @@ function main(item) {
         "dlxwzh": "tcb3IB5", // 大连新闻综合
         "dlsh": "JzcFkF4",   // 大连生活
         "dlwt": "hxT7Fc3",   // 大连文体
-        "dlys": "8cuL6wa",   // 大连影视
-        "dlse": "q6tZ6Ba",   // 大连少儿
-        "dlgw": "N4S4uAj"    // 大连购物
+        //"dlys": "8cuL6wa",   // 大连影视
+        //"dlse": "q6tZ6Ba",   // 大连少儿
+        "dlgw": "N4S4uAj"    // 大连乐天购物
     };
     
     // 根据ID获取对应的channelid
