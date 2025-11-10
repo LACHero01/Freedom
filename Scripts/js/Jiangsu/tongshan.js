@@ -1,7 +1,7 @@
 function main(item) {
 	/*
 	铜山新闻综合,http://A/ku9/js/Jiangsu/tongshan.js?id=tsxwzh
-	铜山2,http://A/ku9/js/Jiangsu/tongshan.js?id=tssn
+	铜山三农,http://A/ku9/js/Jiangsu/tongshan.js?id=tssn
 	*/
     const id = item.id || 'tsxwzh';
     const n = {
