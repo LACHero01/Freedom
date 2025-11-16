@@ -7,7 +7,8 @@ export default {
 
     // 拼接真实目标 URL,const targetUrl = `https://fy.188766.xyz/?ip=${ip}&mima=${mima}`;
 	
-	const targetUrl = `https://fy.188766.xyz/?url=${url}&mishitong=true&mima=${mima}&haiwai=true`;
+	//const targetUrl = `https://fy.188766.xyz/?url=${url}&mishitong=true&mima=${mima}&haiwai=true`;
+	const targetUrl = `https://bc.188766.xyz/?url=${url}&mishitong=true&mima=${mima}&haiwai=true`;
 	
     // 代理请求
     return fetch(targetUrl, {

@@ -1,5 +1,5 @@
-// 百视通直播源 - 酷9JS版本（更新版）
-// 转换自 bst.js（新增t参数版本）
+// 百视通直播源 - 酷9JS版本（POST请求版）
+// 转换自 bst.php（POST请求版本）
 // 参数: g=用户组, t=类型, c=频道代码
 function main(item) {
     var group = ku9.getQuery(item.url, "g");
@@ -42,7 +42,7 @@ function main(item) {
     }
 }
 
-// 获取播放URL（主逻辑）
+// 获取播放URL（主逻辑）- 使用POST请求
 function get_play_url(group, type, code) {
     var hosts = get_hosts();
     var max_retries = 10;
@@ -50,10 +50,16 @@ function get_play_url(group, type, code) {
     for (var i = 1; i <= max_retries; i++) {
         for (var j = 0; j < hosts.length; j++) {
             var host = hosts[j];
-            var api_url = build_api_url(host, group, type, code);
+            var api_data = build_api_data(host, group, type, code);
+            var api_url = api_data[0];
+            var post_data = api_data[1];
             
             try {
-                var response = ku9.request(api_url, 'GET', JSON.stringify({}), '');
+                var headers = {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                };
+                
+                var response = ku9.request(api_url, 'POST', JSON.stringify(headers), post_data);
                 
                 if (!response || !response.body) {
                     continue; // 尝试下一个主机
@@ -95,20 +101,21 @@ function get_play_url(group, type, code) {
     };
 }
 
-// 构建API URL
-function build_api_url(host, group, type, code) {
+// 构建API URL和POST数据
+function build_api_data(host, group, type, code) {
     var user_id = generate_random_string(1, 16);
     var user_token = generate_random_string(1, 16);
     var tv_id = "$$" + generate_random_string(4, 16);
     
-    var url = "http://" + host + "/ps/OttService/Auth?UserID=" + user_id + 
-              "&UserToken=" + user_token + 
-              "&TVID=" + encodeURIComponent(tv_id) + 
-              "&UserGroup=$TerOut_" + group + 
-              "&ItemType=" + type + 
-              "&ItemCode=" + code;
+    var api_url = "http://" + host + "/ps/OttService/Auth";
+    var post_data = "UserID=" + user_id + 
+                   "&UserToken=" + user_token + 
+                   "&TVID=" + encodeURIComponent(tv_id) + 
+                   "&UserGroup=$TerOut_" + group + 
+                   "&ItemType=" + type + 
+                   "&ItemCode=" + code;
     
-    return url;
+    return [api_url, post_data];
 }
 
 // 获取主机列表
@@ -225,14 +232,14 @@ function process_url_by_type(type, original_url) {
 央视,#genre#
 CCTV-1HD,bst.js?g=1&t=2&c=Umai:CHAN/111128@BESTV.SMG.SMG
 CCTV-2HD,bst.js?g=1&t=2&c=Umai:CHAN/5000036@BESTV.SMG.SMG
-CCTV-3HD,bst.js?g=14&t=2&c=Umai:CHAN/1369028@BESTV.SMG.SMG
+CCTV-3HD,bst.js?g=29&t=2&c=Umai:CHAN/1369028@BESTV.SMG.SMG
 CCTV-4,bst.js?g=1&t=2&c=Umai:CHAN/1349@BESTV.SMG.SMG
-CCTV-5HD,bst.js?g=14&t=2&c=Umai:CHAN/1369029@BESTV.SMG.SMG
-CCTV-5+HD,bst.js?g=14&t=2&c=Umai:CHAN/6000068@BESTV.SMG.SMG
-CCTV-6HD,bst.js?g=14&t=2&c=Umai:CHAN/1369030@BESTV.SMG.SMG
+CCTV-5HD,bst.js?g=29&t=2&c=Umai:CHAN/1369029@BESTV.SMG.SMG
+CCTV-5+HD,bst.js?g=29&t=2&c=Umai:CHAN/6000068@BESTV.SMG.SMG
+CCTV-6HD,bst.js?g=29&t=2&c=Umai:CHAN/1369030@BESTV.SMG.SMG
 CCTV-7,bst.js?g=1&t=2&c=Umai:CHAN/1352@BESTV.SMG.SMG
-CCTV-8HD,bst.js?g=14&t=2&c=Umai:CHAN/1369033@BESTV.SMG.SMG
-CCTV-9HD,bst.js?g=14&t=2&c=Umai:CHAN/5000039@BESTV.SMG.SMG
+CCTV-8HD,bst.js?g=29&t=2&c=Umai:CHAN/1369033@BESTV.SMG.SMG
+CCTV-9HD,bst.js?g=29&t=2&c=Umai:CHAN/5000039@BESTV.SMG.SMG
 CCTV-10,bst.js?g=1&t=2&c=Umai:CHAN/1355@BESTV.SMG.SMG
 CCTV-11,bst.js?g=1&t=2&c=Umai:CHAN/1356@BESTV.SMG.SMG
 CCTV-12,bst.js?g=1&t=2&c=Umai:CHAN/1357@BESTV.SMG.SMG
@@ -240,12 +247,12 @@ CCTV-13HD,bst.js?g=1&t=2&c=Umai:CHAN/6000054@BESTV.SMG.SMG
 CCTV-13,bst.js?g=1&t=2&c=Umai:CHAN/1358@BESTV.SMG.SMG
 CCTV-14,bst.js?g=1&t=2&c=Umai:CHAN/1359@BESTV.SMG.SMG
 CCTV-15,bst.js?g=1&t=2&c=Umai:CHAN/3874@BESTV.SMG.SMG
-CCTV-16HD,bst.js?g=14&t=2&c=Umai:CHAN/6000061@BESTV.SMG.SMG
-CCTV-17HD,bst.js?g=14&t=2&c=Umai:CHAN/5000041@BESTV.SMG.SMG
+CCTV-16HD,bst.js?g=29&t=2&c=Umai:CHAN/6000061@BESTV.SMG.SMG
+CCTV-17HD,bst.js?g=29&t=2&c=Umai:CHAN/5000041@BESTV.SMG.SMG
 
 卫视,#genre#
 安徽卫视HD,bst.js?g=1&t=2&c=Umai:CHAN/3540416@BESTV.SMG.SMG
-北京卫视HD,bst.js?g=14&t=2&c=Umai:CHAN/181361@BESTV.SMG.SMG
+北京卫视HD,bst.js?g=29&t=2&c=Umai:CHAN/181361@BESTV.SMG.SMG
 北京卫视,bst.js?g=1&t=2&c=Umai:CHAN/1326@BESTV.SMG.SMG
 广东深圳卫视HD,bst.js?g=1&t=2&c=Umai:CHAN/181362@BESTV.SMG.SMG
 黑龙江卫视,bst.js?g=1&t=2&c=Umai:CHAN/1343@BESTV.SMG.SMG
@@ -267,13 +274,13 @@ CCTV-17HD,bst.js?g=14&t=2&c=Umai:CHAN/5000041@BESTV.SMG.SMG
 东方购物-1,bst.js?g=1&t=2&c=Umai:CHAN/648549@BESTV.SMG.SMG
 都市剧场,bst.js?g=1&t=2&c=Umai:CHAN/1366@BESTV.SMG.SMG
 都市频道,bst.js?g=1&t=2&c=Umai:CHAN/1318@BESTV.SMG.SMG
-哈哈炫动HD,bst.js?g=14&t=2&c=Umai:CHAN/4641019@BESTV.SMG.SMG
+哈哈炫动HD,bst.js?g=29&t=2&c=Umai:CHAN/4641019@BESTV.SMG.SMG
 哈哈炫动,bst.js?g=1&t=2&c=Umai:CHAN/1324@BESTV.SMG.SMG
 欢笑剧场,bst.js?g=1&t=2&c=Umai:CHAN/1376@BESTV.SMG.SMG
-七彩戏剧HD,bst.js?g=14&t=2&c=Umai:CHAN/6880440@BESTV.SMG.SMG
+七彩戏剧HD,bst.js?g=29&t=2&c=Umai:CHAN/6880440@BESTV.SMG.SMG
 七彩戏剧,bst.js?g=1&t=2&c=Umai:CHAN/1374@BESTV.SMG.SMG
 外语频道HD,bst.js?g=1&t=2&c=Umai:CHAN/3778907@BESTV.SMG.SMG
-新闻综合HD,bst.js?g=14&t=2&c=Umai:CHAN/1346060@BESTV.SMG.SMG
+新闻综合HD,bst.js?g=29&t=2&c=Umai:CHAN/1346060@BESTV.SMG.SMG
 新闻综合,bst.js?g=1&t=2&c=Umai:CHAN/1312@BESTV.SMG.SMG
 游戏风云HD,bst.js?g=1&t=2&c=Umai:CHAN/1555894@BESTV.SMG.SMG
 
