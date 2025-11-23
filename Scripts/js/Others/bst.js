@@ -1,146 +1,116 @@
-// 百视通直播源 - 酷9JS版本（GET请求版）
-// 转换自 bst.php（GET请求版本）
-// 参数: g=用户组, t=类型, c=频道代码
+// 转换自: bst.php (百视通直播)
 function main(item) {
-    var group = ku9.getQuery(item.url, "g");
-    var type = ku9.getQuery(item.url, "t");
-    var code = ku9.getQuery(item.url, "c");
-    
-    if (!group || !type || !code) {
-        return JSON.stringify({
-            code: 400,
-            message: '缺少必要参数',
-            usage: '需要g(用户组)、t(类型)和c(频道代码)参数',
-            example: '?g=1&t=2&c=Umai:CHAN/111131@BESTV.SMG.SMG',
-            note: 't参数说明: 1=添加_BitRate参数, 2+=去掉查询参数'
-        });
-    }
+    var group = item.g || '1'; // UserGroup
+    var type = item.t || '1';  // ItemType
+    var code = item.c || '';   // ItemCode (频道代码)
+    var playseek = item.playseek || null; // 回看时间范围
     
     try {
-        var result = get_play_url(group, type, code);
+        // 获取主机列表
+        var hosts = hosts_get();
+        var play_url = '';
+        var response_msg = '';
         
-        if (result.success) {
-            return JSON.stringify({
-                code: 200,
-                message: '获取成功',
-                url: result.play_url,
-                type: type,
-                info: '百视通直播源 - 类型' + type
+        // 尝试每个主机
+        for (var i = 0; i < hosts.length; i++) {
+            var host = hosts[i];
+            
+            // 获取接口URL和POST数据
+            var intfData = intf_get(host, group, type, code);
+            var url = intfData[0];
+            var postData = intfData[1];
+            
+            var headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json, text/plain, */*"
+            };
+            
+            // 发送POST请求
+            var response = ku9.request(
+                url,
+                'POST',
+                JSON.stringify(headers),
+                postData
+            );
+            
+            if (!response || !response.body) {
+                continue; // 尝试下一个主机
+            }
+            
+            // 处理响应
+            var urlResult = url_get(playseek, type, response.body, response_msg);
+            
+            if (urlResult && urlResult.url) {
+                play_url = urlResult.url;
+                break; // 成功获取播放地址
+            } else if (urlResult.responseCode === -4020) {
+                // 直播频道配置异常，停止尝试
+                break;
+            }
+            // 其他错误继续尝试下一个主机
+        }
+        
+        if (play_url) {
+            return JSON.stringify({ 
+                url: play_url,
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "Accept": "*/*"
+                }
             });
         } else {
-            return JSON.stringify({
-                code: 500,
-                message: result.error_msg || '无法获取播放地址'
+            return JSON.stringify({ 
+                error: "无法获取播放地址: " + response_msg 
             });
         }
         
     } catch (e) {
-        return JSON.stringify({
-            code: 500,
-            message: '处理过程中出错: ' + e.toString()
+        return JSON.stringify({ 
+            error: "获取百视通直播地址失败: " + e.toString() 
         });
     }
 }
 
-// 获取播放URL（主逻辑）- 使用GET请求
-function get_play_url(group, type, code) {
-    var hosts = get_hosts();
-    var max_retries = 1; // 重试次数改为1次
+// 获取接口URL和POST数据
+function intf_get(host, group, type, code) {
+    var url = 'http://' + host + '/ps/OttService/Auth';
     
-    for (var i = 1; i <= max_retries; i++) {
-        for (var j = 0; j < hosts.length; j++) {
-            var host = hosts[j];
-            var api_url = build_api_url(host, group, type, code);
-            
-            try {
-                var response = ku9.request(api_url, 'GET', JSON.stringify({}), '');
-                
-                if (!response || !response.body) {
-                    continue; // 尝试下一个主机
-                }
-                
-                var result = parse_response(type, response.body);
-                
-                if (result.response_code === 0) {
-                    return {
-                        success: true,
-                        play_url: result.play_url
-                    };
-                } else if (result.response_code === -4014) {
-                    // 防盗链服务错误，继续尝试
-                    break;
-                } else if (result.response_code === -4020) {
-                    // 直播频道配置异常，停止重试
-                    return {
-                        success: false,
-                        error_msg: result.response_msg
-                    };
-                } else {
-                    // 其他错误，停止重试
-                    return {
-                        success: false,
-                        error_msg: result.response_msg
-                    };
-                }
-            } catch (e) {
-                // 请求失败，继续尝试下一个主机
-                continue;
-            }
-        }
-    }
-    
-    return {
-        success: false,
-        error_msg: '所有服务器尝试失败'
+    var params = {
+        'UserID': user_get_id(),
+        'UserToken': user_get_token(),
+        'TVID': '$$' + tvid_get(),
+        'UserGroup': '$TerOut_' + group,
+        'ItemType': type,
+        'ItemCode': code
     };
+    
+    var postData = Object.keys(params).map(function(key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+    }).join('&');
+    
+    return [url, postData];
 }
 
-// 构建API URL（GET请求，参数在URL中）
-function build_api_url(host, group, type, code) {
-    var user_id = get_user_id(); // 固定UserID
-    var user_token = generate_random_string(1, 16);
-    var tv_id = "$$" + generate_random_string(4, 16);
-    
-    var params = "UserID=" + user_id + 
-                "&UserToken=" + user_token + 
-                "&TVID=" + encodeURIComponent(tv_id) + 
-                "&UserGroup=$TerOut_" + group + 
-                "&ItemType=" + type + 
-                "&ItemCode=" + encodeURIComponent(code);
-    
-    var api_url = "http://" + host + "/ps/OttService/Auth?" + params;
-    
-    return api_url;
+// 生成TVID
+function tvid_get() {
+    return random_string(4, 16);
 }
 
-// 获取固定UserID
-function get_user_id() {
-    return '023909999999999'; // 固定UserID
+// 生成用户Token
+function user_get_token() {
+    return random_string(1, 16);
 }
 
-// 获取主机列表
-function get_hosts() {
-    return [
-        'ltzxps.bbtv.cn'
-        // 注释掉的其他主机可以按需添加
-        // '139.224.116.50',
-        // 'dangbeisdkps.bestv.com.cn',
-        // 'dangbeisdkaaa.bestv.com.cn',
-        // 'b2cv3replay.bestv.com.cn',
-        // 'b2cv3wxmini.bestv.com.cn',
-        // 'b2cv3epg.bestv.com.cn',
-        // 'b2cv3aaa.bestv.com.cn',
-        // 'b2cv3ps.bestv.com.cn',
-        // 'b2cv3up.bestv.com.cn',
-        // 'b2cv3wag.bestv.com.cn',
-        // '2cv3qhaaa.bestv.com.cn',
-    ];
+// 生成用户ID
+function user_get_id() {
+    return random_string(1, 16);
 }
 
 // 生成随机字符串
-function generate_random_string(min_length, max_length) {
+function random_string(min, max) {
     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var length = Math.floor(Math.random() * (max_length - min_length + 1)) + min_length;
+    var length = Math.floor(Math.random() * (max - min + 1)) + min;
     var result = '';
     
     for (var i = 0; i < length; i++) {
@@ -150,66 +120,122 @@ function generate_random_string(min_length, max_length) {
     return result;
 }
 
-// 解析API响应（根据type处理URL）
-function parse_response(type, content) {
+// 获取主机列表
+function hosts_get() {
+    return [
+        '139.224.116.50'
+        // 可以添加更多备用主机
+    ];
+}
+
+// 处理URL响应
+function url_get(playseek, type, content, response_msg) {
     try {
-        var json_data = JSON.parse(content);
-        var response_header = json_data.Response.Header;
-        var response_body = json_data.Response.Body;
+        var jsonData = JSON.parse(content);
+        var responseHeader = jsonData.Response.Header;
+        var responseCode = responseHeader.RC;
+        response_msg = responseHeader.RM || '';
         
-        var response_code = response_header.RC;
-        var response_msg = response_header.RM;
-        
-        if (response_code !== 0) {
+        if (responseCode !== 0) {
             return {
-                response_code: response_code,
-                response_msg: response_msg,
-                play_url: null
+                responseCode: responseCode,
+                error: response_msg
             };
         }
         
-        // 提取播放URL - 现在只使用PlayURL，不再使用LookBackUrl
-        var play_url = response_body.PlayURL;
+        var responseBody = jsonData.Response.Body;
+        var url = '';
         
-        if (!play_url) {
+        // 根据是否有回看时间选择URL
+        if (playseek !== null) {
+            url = responseBody.LookBackUrl || responseBody.PlayURL;
+        } else {
+            url = responseBody.PlayURL;
+        }
+        
+        if (!url) {
             return {
-                response_code: -1,
-                response_msg: '未找到播放地址',
-                play_url: null
+                responseCode: -1,
+                error: "未找到播放URL"
             };
         }
         
-        // 根据type参数处理URL
-        var processed_url = process_url_by_type(type, play_url);
+        // 根据类型处理URL
+        if (type > 1) {
+            // 解析查询参数
+            var urlObj = new URL(url);
+            var se = urlObj.searchParams.get('se');
+            var ct = urlObj.searchParams.get('ct');
+            
+            if (se && ct) {
+                url = url.split('?')[0] + '?se=' + se + '&ct=' + ct;
+            } else {
+                url = url.split('?')[0];
+            }
+        } else {
+            url = url.split('?')[0] + '?_BitRate=6000';
+        }
+        
+        // 处理回看时间
+        if (playseek !== null) {
+            var timeRange = parsePlayseek(playseek);
+            if (timeRange) {
+                var separator = url.includes('?') ? '&' : '?';
+                url += separator + 'starttime=' + timeRange.starttime + '&endtime=' + timeRange.endtime;
+            }
+        }
         
         return {
-            response_code: response_code,
-            response_msg: response_msg,
-            play_url: processed_url
+            url: url,
+            responseCode: 0
         };
         
     } catch (e) {
         return {
-            response_code: -1,
-            response_msg: '响应解析失败: ' + e.toString(),
-            play_url: null
+            responseCode: -1,
+            error: "解析响应失败: " + e.toString()
         };
     }
 }
 
-// 根据type参数处理URL（简化版）
-function process_url_by_type(type, original_url) {
-    // 解析URL
-    var url_parts = original_url.split('?');
-    var base_url = url_parts[0];
-    
-    if (parseInt(type) > 1) {
-        // type > 1: 直接返回基础URL，去掉查询参数
-        return base_url;
-    } else {
-        // type = 1: 添加_BitRate参数
-        return base_url + '?_BitRate=6000';
+// 解析回看时间范围
+function parsePlayseek(playseek) {
+    try {
+        var parts = playseek.split('-');
+        if (parts.length !== 2) return null;
+        
+        var startStr = parts[0]; // 格式: YYYYMMDDHHMMSS
+        var endStr = parts[1];
+        
+        // 将时间字符串转换为时间戳
+        var startTime = parseDateTime(startStr);
+        var endTime = parseDateTime(endStr);
+        
+        if (startTime && endTime) {
+            return {
+                starttime: Math.floor(startTime / 1000), // 转换为秒
+                endtime: Math.floor(endTime / 1000)
+            };
+        }
+    } catch (e) {
+        console.error('解析回看时间失败:', e);
     }
+    return null;
+}
+
+// 解析日期时间字符串
+function parseDateTime(dateTimeStr) {
+    // 格式: YYYYMMDDHHMMSS
+    var year = parseInt(dateTimeStr.substring(0, 4));
+    var month = parseInt(dateTimeStr.substring(4, 6)) - 1; // 月份从0开始
+    var day = parseInt(dateTimeStr.substring(6, 8));
+    var hour = parseInt(dateTimeStr.substring(8, 10));
+    var minute = parseInt(dateTimeStr.substring(10, 12));
+    var second = parseInt(dateTimeStr.substring(12, 14));
+    
+    // 创建日期对象（使用本地时区）
+    var date = new Date(year, month, day, hour, minute, second);
+    return date.getTime();
 }
 /*
 东方卫视,bst.js?g=1&t=2&c=Umai:CHAN/111131@BESTV.SMG.SMG
