@@ -88,6 +88,12 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/zqtq/51/20251103/01.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/zqtq/51/20251103/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],
+		'btws': [ // 兵团卫视
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/index.m3u8?&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/01.m3u8?&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
+        ],
         'cqws': [ // 重庆卫视
             'http://hlsbkmgsplive.miguvideo.com/envivo_x/2018/SD/chongqing/1000/index.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/envivo_x/2018/SD/chongqing/1000/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
@@ -165,6 +171,12 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/envivo_v/2018/SD/jilin/1000/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/envivo_v/2018/SD/jilin/1000/01.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/envivo_v/2018/SD/jilin/1000/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
+        ],
+		'jxws': [ // 江西卫视
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/jxwshd/57/20190820/index.m3u8?&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/jxwshd/57/20190820/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/jxwshd/57/20190820/01.m3u8?&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/jxwshd/57/20190820/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],
         'lnws': [ // 辽宁卫视
             'http://hlsbkmgsplive.miguvideo.com/wd_r2/ocn/liaoningwshd/3000/index.m3u8?&encrypt=',
@@ -457,6 +469,7 @@ function getChannelName(channelId) {
         'chcjtyy': 'CHC家庭影院',
         'chcdzdy': 'CHC动作电影',
         'zgtq': '中国天气',
+		'btws': '兵团卫视',
         'cqws': '重庆卫视',
         'dgqws': '大湾区卫视',
         'dnws': '东南卫视',
@@ -470,6 +483,7 @@ function getChannelName(channelId) {
         'hbws': '湖北卫视',
         'hunws': '湖南卫视',
         'jlws': '吉林卫视',
+		'jxws': '江西卫视',
         'lnws': '辽宁卫视',
         'nmgws': '内蒙古卫视',
         'nxws': '宁夏卫视',
