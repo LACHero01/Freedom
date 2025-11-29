@@ -334,6 +334,12 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/wd_r2/jstv/jsjiaoyu/600/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/wd_r2/jstv/jsjiaoyu/600/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],
+		'jscftx': [ // 江苏财富天下
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/cftx/51/20250804/index.m3u8?&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/cftx/51/20250804/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/cftx/51/20250804/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/cftx/51/20250804/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
+		],
         'njxwzh': [ // 南京新闻综合
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/nanjingxwzh/50/20230719/index.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/nanjingxwzh/50/20230719/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
@@ -553,6 +559,7 @@ function getChannelName(channelId) {
         'jsymkt': '江苏优漫卡通',
         'jsgj': '江苏国际',
         'jsjy': '江苏教育',
+		'jscftx': '江苏财富天下',
         'njxwzh': '南京新闻综合',
         'njkj': '南京教科',
         'njsb': '南京十八生活',
