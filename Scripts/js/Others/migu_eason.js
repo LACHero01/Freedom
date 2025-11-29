@@ -564,7 +564,7 @@ function getChannelName(channelId) {
         'njkj': '南京教科',
         'njsb': '南京十八生活',
         'tzxwzh': '泰州新闻综合',
-		'yxxwzh': '宜兴新闻综合'.
+		'yxxwzh': '宜兴新闻综合',
 		'ycxwzh': '盐城新闻综合',
         'xzxwzh': '徐州新闻综合',
         'sqzh': '宿迁综合',
