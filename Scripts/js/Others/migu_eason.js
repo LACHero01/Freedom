@@ -100,7 +100,7 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/wd_r1/2018/gesee/chcdzdy/600/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/wd_r1/2018/gesee/chcdzdy/600/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],	
-			'ttmlh': [ // 体坛名栏汇
+		'ttmlh': [ // 体坛名栏汇
 			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/titanminglan/51/20250514/index.m3u8?&encrypt=',
 			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/titanminglan/51/20250514/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
 			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/titanminglan/51/20250514/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
