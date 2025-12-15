@@ -1,4 +1,4 @@
-// 深圳台直播源 - 酷9JS版本
+// 深圳台直播源 - 酷9JS版本（已添加Referer修复403问题）
 // 转换自 shenzhen.php
 // 参数: channel=频道名称 (深圳卫视, 深圳少儿, 深圳财经, 深圳电视剧, 宜和购物, 深圳都市, 深圳国际, 深圳移动, 深圳卫视4k)
 function main(item) {
@@ -63,11 +63,17 @@ function main(item) {
         
         var liveURL = hosts + path + "?sign=" + sign + "&t=" + dectime;
         
+        // 返回结果，添加Referer请求头以解决403问题
         return JSON.stringify({
             code: 200,
             message: '获取成功',
             url: liveURL,
-            channel: channel
+            channel: channel,
+            headers: {
+                "Referer": "https://www.sztv.com.cn/",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Origin": "https://www.sztv.com.cn"
+            }
         });
         
     } catch (e) {
