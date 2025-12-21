@@ -262,6 +262,12 @@ function main(item) {
 			'http://hlsbkmgsplive.miguvideo.com/wd_r2/virtuallive/5102010211/75/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
 			'http://hlsbkmgsplive.miguvideo.com/wd_r2/virtuallive/5102010211/75/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
 		],
+		'bjws': [  // 北京卫视
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/bjws/50/20251127/index.m3u8?&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/bjws/50/20251127/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/bjws/50/20251127/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/migu/kailu/bjws/50/20251127/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt',    
+		],
 		'btws': [ // 兵团卫视
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/index.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/btws/51/20250804/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
@@ -293,6 +299,10 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/envivo_v/2018/SD/gansu/1000/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],
         'gdws': [ // 广东卫视
+		    'http://hlsbkmgsplive.miguvideo.com/ws_w/2018/gdws/gdws711/1000/index.m3u8?&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/ws_w/2018/gdws/gdws711/1000/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/ws_w/2018/gdws/gdws711/1000/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
+			'http://hlsbkmgsplive.miguvideo.com/ws_w/2018/gdws/gdws711/1000/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt',
             'http://hlsbkmgsplive.miguvideo.com/ws_w/gdws/gdws3000/3000/index.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/ws_w/gdws/gdws3000/3000/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/ws_w/gdws/gdws3000/3000/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
@@ -382,6 +392,12 @@ function main(item) {
             'http://hlsbkmgsplive.miguvideo.com/envivo_w/2018/SD/qinghai/1000/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/envivo_w/2018/SD/qinghai/1000/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt='
         ],
+        'ssws': [ // 三沙卫视
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/ssws/50/20251127/index.m3u8?&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/ssws/50/20251127/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/ssws/50/20251127/01.m3u8?msisdn=&Channel_ID=&ContentId=&HlsSubType=&HlsProfileId=&encrypt=',
+            'http://hlsbkmgsplive.miguvideo.com/migu/kailu/ssws/50/20251127/01.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt',
+       ],
         'sdjyws': [ // 山东教育卫视
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/sdjyws/51/20250915/index.m3u8?&encrypt=',
             'http://hlsbkmgsplive.miguvideo.com/migu/kailu/sdjyws/51/20250915/index.m3u8?msisdn=&mtv_session=&HlsSubType=1&HlsProfileId=1&nphaid=0&encrypt=',
@@ -709,6 +725,7 @@ function getChannelName(channelId) {
 		'qtj': '钱塘江',
 		'zjl': '周杰伦现场',
 		'hyyt': '华语乐坛最强音',
+		'bjws': '北京卫视',
 		'btws': '兵团卫视',
         'cqws': '重庆卫视',
         'dgqws': '大湾区卫视',
@@ -729,6 +746,7 @@ function getChannelName(channelId) {
         'nxws': '宁夏卫视',
         'nlws': '农林卫视',
         'qhws': '青海卫视',
+		'ssws': '三沙卫视',
         'sdjyws': '山东教育卫视',
         'sdws': '山东卫视',
         'sxws': '陕西卫视',
