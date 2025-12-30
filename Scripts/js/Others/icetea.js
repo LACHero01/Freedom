@@ -186,7 +186,7 @@ function main(item) {
     try {
         // 获取M3U8播放列表
         //var m3u8Url = "https://bc.188766.xyz/?ip=";
-        var m3u8Url = "https://bc.188766.xyz/?url=https://live.ottiptv.cc&mishitong=true&mima=mianfeibuhuaqian";
+        var m3u8Url = "https://bc.188766.xyz/?url=https://live.ottiptv.cc&mishitong=true&mima=bingcha1130";
         var headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
             "Accept": "*/*",
