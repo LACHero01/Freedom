@@ -1,20 +1,22 @@
-// 来源: qinghai.php - 青海电视台（简化版）
+// 来源: qhtv.php - 青海电视台
 function main(item) {
     var id = ku9.getQuery(item.url, "id") || 'qhws';
     
     var n = {
-        "qhws": ["786181204964564992"], // 青海卫视
-        "qhjs": ["786227316454875136"], // 青海经视
-        "qhds": ["786227009616371712"]  // 青海都市
+        "qhws": ["786181204964564992", "32a2c3b4f1b52c58119457d44acdcd49", 1075], // 青海卫视
+        "qhjs": ["786227316454875136", "32a2c3b4f1b52c58119457d44acdcd49", 1075], // 青海经视
+        "qhds": ["786227009616371712", "32a2c3b4f1b52c58119457d44acdcd49", 1075], // 青海都市
+        "adws": ["824587377543962624", "069486993db4acc22c846557c8880d9a", 1077]  // 安多卫视
     };
     
-    var channelId = n[id];
-    if (!channelId) {
+    var channelInfo = n[id];
+    if (!channelInfo) {
         return JSON.stringify({ error: "不支持的频道ID: " + id });
     }
     
     var apiUrl = "https://mapi.qhbtv.com.cn/cloudlive-manage-mapi/api/topic/detail?preview=&id=" + 
-                 channelId[0] + "&app_secret=32a2c3b4f1b52c58119457d44acdcd49&tenant_id=0&company_id=1075&lang_type=zh";
+                 channelInfo[0] + "&app_secret=" + channelInfo[1] + "&tenant_id=0&company_id=" + 
+                 channelInfo[2] + "&lang_type=zh";
     
     try {
         var headers = {
