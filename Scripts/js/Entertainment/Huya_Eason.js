@@ -8,7 +8,7 @@ function main(item) {
         let type = ids['type'].toLowerCase();
         id = ids['id'];
         
-        if (type == 'douyu') return go_Douyu(id);
+        //if (type == 'douyu') return go_Douyu(id);
         if (type == 'huya') return go_Huya(id, media);
         
         return {url: 'https://vd3.bdstatic.com/mda-qesb3w0qg3ps079q/1080p/cae_h264/1716796530327603173/mda-qesb3w0qg3ps079q.mp4'}; //埋葬灵魂
@@ -82,6 +82,8 @@ function go_Huya(id, media='flv') {
     const playurl = `${burl}?${params}`;
     return { url: playurl };
 }
+
+/*
 function go_Douyu(id) {
     //let id = item.id || "2758565";
     let apiUrl = 'https://wxapp.douyucdn.cn/api/nc/stream/roomPlayer';    
@@ -96,6 +98,7 @@ function go_Douyu(id) {
     let playurl = jsonData.data.live_url;
     return { url: playurl };
 }
+*/
 
 /*
 食用方法：
