@@ -9,16 +9,23 @@ class Parser(Parser):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # 频道别名映射（对应第一份 PHP）
+        # 频道别名映射（两份PHP综合）
         self.channel_alias_map = {
             'jlws': 1531,  # 吉林卫视
             'jlds': 1532,  # 都市频道
             'jlsh': 1534,  # 生活频道
             'jlys': 1535,  # 影视频道
             'jlxc': 1536,  # 乡村频道
-            'jlgg': 1537,  # 公共·新闻频道
+            #'jlgg': 1537,  # 公共·新闻频道,该频道已停播
             'jlzy': 1538,  # 综艺文化频道
-            'dbxq': 1539,  # 东北戏曲频道
+            #'dbxq': 1539,  # 东北戏曲频道,该频道已停播
+            'jlsxwzh': 812373 , #吉林市新闻综合
+            'spxwzh': 812374, # 四平新闻综合
+            'lyxwzh': 812376, # 辽源新闻综合
+            'thxwzh': 812379, # 通化新闻综合
+            'bsxwzh': 812383, # 白山新闻综合
+            'bcxwzh': 812380, # 白城新闻综合
+            'syxwzh': 812382 # 松原新闻综合
         }
 
         # XXTEA 密钥（两份 PHP 一样）
